@@ -5,5 +5,9 @@ import { AuthService } from './auth.service';
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
+  @Post('signup')
+  signUpLocal(){
+    return this.authService.signUpLocal()
+  }
   
 }
