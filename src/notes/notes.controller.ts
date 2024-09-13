@@ -31,8 +31,12 @@ export class NotesController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.notesService.findOne(+id);
+  findOne(
+    @Param('id') id: string,
+    @Req() req: Request
+    ) {
+      const user = req.user
+    return this.notesService.findOne(user['id'],+id);
   }
 
   @Patch(':id')
@@ -41,7 +45,11 @@ export class NotesController {
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.notesService.remove(+id);
+  remove(
+    @Param('id') id: string,
+    @Req() req: Request
+    ) {
+      const user = req.user
+    return this.notesService.remove(user['id'],+id);
   }
 }

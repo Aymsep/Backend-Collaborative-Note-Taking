@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateNoteDto } from './dto/create-note.dto';
 import { UpdateNoteDto } from './dto/update-note.dto';
 import { DatabaseService } from 'src/database/database.service';
@@ -26,15 +26,36 @@ export class NotesService {
     }) 
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} note`;
-  }
+  async findOne(userId: number,noteId: number) {
+    const note = await this.databaseService.note.findUnique({
+      where:{
+        id:noteId
+      }
+    })
+    if(!note || note.userId !== userId) {
+      throw new NotFoundException('Not found or Access Denied')
+    }
+
+    return note
+    }
 
   update(id: number, updateNoteDto: UpdateNoteDto) {
     return `This action updates a #${id} note`;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} note`;
+  async remove(userId:number,noteId:number) {
+    const note = await this.databaseService.note.findUnique({
+      where:{
+        id:noteId
+      }
+    })
+    if(!note || note.userId !== userId) {
+      throw new NotFoundException('Not found or Access Denied')
+    }
+    return await this.databaseService.note.delete({
+      where:{
+        id:noteId
+      }
+    })
   }
 }
