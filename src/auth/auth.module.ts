@@ -4,15 +4,18 @@ import { AuthController } from './auth.controller';
 import { DatabaseModule } from 'src/database/database.module';
 import { JwtModule } from '@nestjs/jwt';
 import { jwtConstants } from './constants';
+import { AtStratJwt } from './stratgies';
 
 @Module({
   controllers: [AuthController],
-  providers: [AuthService],
+  providers: [
+    AuthService,
+    AtStratJwt,
+  ],
   imports:[
     DatabaseModule,
     JwtModule.register({
-      secret:jwtConstants.secret,
-      signOptions:{expiresIn:jwtConstants.expiration}
+      secret:jwtConstants.secret
     })
   ]
 })

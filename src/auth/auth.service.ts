@@ -1,4 +1,4 @@
-import { ConflictException, Injectable, InternalServerErrorException } from '@nestjs/common';
+import { ConflictException, ForbiddenException, Injectable, InternalServerErrorException } from '@nestjs/common';
 import { DatabaseService } from 'src/database/database.service';
 import { CreateUserDto, LoginUserDto } from './dto';
 import * as bcrypt from 'bcrypt';
@@ -52,6 +52,16 @@ export class AuthService {
         return this.generateToken(user)
     }
 
+    async getProfile(userId:number){
+        const user = await this.databaseService.user.findUnique({
+            where:{
+                id:userId
+            }
+        })
+        if(!user) throw new ForbiddenException('User Not Found')
+        const {password:_,...results} = user
+         return results
+    }
 
     async validateUser(email: string, password: string): Promise<any> {
         const user = await this.databaseService.user.findUnique({
