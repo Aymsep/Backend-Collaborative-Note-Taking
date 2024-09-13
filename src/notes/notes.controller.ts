@@ -4,6 +4,7 @@ import { CreateNoteDto } from './dto/create-note.dto';
 import { UpdateNoteDto } from './dto/update-note.dto';
 import { AuthGuard } from '@nestjs/passport';
 import { Request } from 'express';
+import { sharedNoteDto } from './dto';
 
 @Controller('notes')
 @UseGuards(AuthGuard('jwt-checker'))
@@ -16,9 +17,18 @@ export class NotesController {
     @Req() req: Request
     ) {
       const user = req.user
-    console.log('user',user)
 
     return this.notesService.create(user['id'],note);
+  }
+
+  @Post('share')
+  async share(
+    @Body() note:sharedNoteDto,
+    @Req() req: Request
+  ){
+    const user = req.user
+    return this.notesService.shareNote(user['id'],note['NoteId'],note['targetId'])
+
   }
 
   @Get()
