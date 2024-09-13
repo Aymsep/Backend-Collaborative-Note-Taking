@@ -40,7 +40,7 @@ export class AuthService {
                     password:hashedPassword
                 }
             })
-            return this.generateToken(user)
+            return this.generateToken(newUser)
 
         }catch(err){
             console.log(err)
@@ -85,11 +85,15 @@ export class AuthService {
       }
 
       async generateToken(user: any) {
-        const payload = { username:user.username,email: user.email, sub: user.id };
+        const payload = {
+            id: user.id,
+            email: user.email,
+            username:user.username
+        }
         return {
           access_token: this.jwtService.sign(payload),
           user:{
-            ...user
+            ...payload
         }
         };
       }
