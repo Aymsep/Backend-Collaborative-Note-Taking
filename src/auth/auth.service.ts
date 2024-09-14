@@ -71,7 +71,7 @@ export class AuthService {
         });
     
         if (!user || !(await bcrypt.compare(password, user.password))) {
-          return null; // Return null if credentials are incorrect
+            throw new ForbiddenException('User Not Found')
         }
     
         const { password: _, ...result } = user; // Exclude the password field

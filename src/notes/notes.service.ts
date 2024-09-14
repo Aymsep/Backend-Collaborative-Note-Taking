@@ -75,8 +75,22 @@ export class NotesService {
     })
   }
 
-  update(id: number, updateNoteDto: UpdateNoteDto) {
-    return `This action updates a #${id} note`;
+  async update(userId: number,noteId:number ,noteUpdated: UpdateNoteDto) {
+    const note = await this.databaseService.note.findUnique({
+      where:{
+        id:noteId
+      }
+    })
+    if(!note) throw new NotFoundException('Note found')
+    if(note.userId !== note.userId) throw new ForbiddenException('Access to this note is Forbidden')
+    return await this.databaseService.note.update({
+          where:{
+            id:noteId
+          },
+          data:{
+            content:noteUpdated.content
+          }
+    })
   }
 
   async remove(userId:number,noteId:number) {

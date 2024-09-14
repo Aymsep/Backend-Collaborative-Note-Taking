@@ -30,7 +30,7 @@ export class AuthController {
   @Get('profile')
   async getProfile(@Req() req: Request){
     const user = req.user
-    return this.authService.getProfile(user['sub'])
+    return this.authService.getProfile(user['id'])
   }
 
   

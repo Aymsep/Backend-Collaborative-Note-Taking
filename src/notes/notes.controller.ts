@@ -50,8 +50,13 @@ export class NotesController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateNoteDto: UpdateNoteDto) {
-    return this.notesService.update(+id, updateNoteDto);
+  update(
+    @Req() req: Request,
+     @Param('id') id: string,
+     @Body() content: UpdateNoteDto
+     ) {
+      const user =  req.user
+    return this.notesService.update(user['id'],+id,content);
   }
 
   @Delete(':id')
