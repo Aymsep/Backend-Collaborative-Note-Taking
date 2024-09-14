@@ -27,6 +27,8 @@ export class NotesController {
     @Req() req: Request
   ){
     const user = req.user
+    console.log('user', user)
+    console.log('note', note)
     return this.notesService.shareNote(user['id'],note['NoteId'],note['targetId'])
 
   }

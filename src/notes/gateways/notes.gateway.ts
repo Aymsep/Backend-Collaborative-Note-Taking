@@ -35,4 +35,12 @@ export class NoteGateway implements OnGatewayInit, OnGatewayConnection, OnGatewa
     this.logger.log(`Received editNote event for noteId: ${payload.noteId}`);
     client.broadcast.emit(`noteUpdated:${payload.noteId}`, payload.content); // Broadcast changes
   }
+
+  @SubscribeMessage('deleteNote')
+  handleDeleteNote(client: Socket, payload: { noteId: number }) {
+    this.logger.log(`Received deleteNote event for noteId: ${payload.noteId}`);
+    
+    // Broadcast the note deletion to all other clients
+    client.broadcast.emit(`noteDeleted:${payload.noteId}`);
+  }
 }
