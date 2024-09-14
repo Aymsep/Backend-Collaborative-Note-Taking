@@ -104,11 +104,13 @@ export class NotesService {
   }
 
   async remove(userId:number,noteId:number) {
+    console.log('userId:', userId, 'noteId:', noteId)
     const note = await this.databaseService.note.findUnique({
       where:{
         id:noteId
       }
     })
+    console.log(note)
     if(!note || note.userId !== userId) {
       throw new NotFoundException('Not found or Access Denied')
     }

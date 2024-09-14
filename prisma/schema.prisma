@@ -33,6 +33,7 @@ model NoteShare {
   userId    Int
   noteId    Int
   createdAt DateTime @default(now())
-  note      Note     @relation(fields: [noteId], references: [id])
+  note      Note     @relation(fields: [noteId], references: [id], onDelete: Cascade)  
   user      User     @relation(fields: [userId], references: [id])
+  @@map("note_shares")
 }
