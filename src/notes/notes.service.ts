@@ -93,6 +93,16 @@ export class NotesService {
     })
   }
 
+  async noteById(noteId: number){
+    const note = await this.databaseService.note.findUnique({
+      where:{
+        id:noteId
+      }
+    })
+    if(!note) throw new NotFoundException('Note found')
+    return note
+  }
+
   async remove(userId:number,noteId:number) {
     const note = await this.databaseService.note.findUnique({
       where:{
