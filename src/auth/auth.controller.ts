@@ -4,6 +4,7 @@ import { DatabaseService } from 'src/database/database.service';
 import { CreateUserDto, LoginUserDto } from './dto';
 import { Request } from 'express';
 import { AuthGuard } from '@nestjs/passport';
+import { GetUser } from 'src/common/decorators/get-user.decorator';
 
 @Controller('auth/local')
 export class AuthController {
@@ -12,6 +13,7 @@ export class AuthController {
   ) {}
 
   @Post('signup')
+  @HttpCode(HttpStatus.CREATED)
   signUpLocal(@Body() user:CreateUserDto){
     return this.authService.signUpLocal(user)
   }
@@ -28,8 +30,9 @@ export class AuthController {
 
   @UseGuards(AuthGuard('jwt-checker'))
   @Get('profile')
-  async getProfile(@Req() req: Request){
-    const user = req.user
+  async getProfile(
+    @GetUser() user:any
+    ){
     return this.authService.getProfile(user['id'])
   }
 
