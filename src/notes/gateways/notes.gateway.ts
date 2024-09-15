@@ -43,13 +43,13 @@ export class NoteGateway implements OnGatewayInit, OnGatewayConnection, OnGatewa
   @SubscribeMessage('deleteNote')
   handleDeleteNote(client: Socket, payload: { noteId: number }) {
     this.logger.log(`Received deleteNote event for noteId: ${payload.noteId}`);
-    
+    console.log(`Note deleted: ${payload.noteId}`);
     // Broadcast the note deletion to all other clients
     client.broadcast.emit(`noteDeleted:${payload.noteId}`);
   }
 
   @SubscribeMessage('shareNote')
-async handleShareNote(client: Socket, payload: {noteId: number; sharedWith: number }) {
+  async handleShareNote(client: Socket, payload: {noteId: number; sharedWith: number }) {
   this.logger.log(`Sharing note ${payload.noteId} with users: ${payload.sharedWith}`);
 
   // Fetch the note data (assuming you have a service to retrieve note by ID)

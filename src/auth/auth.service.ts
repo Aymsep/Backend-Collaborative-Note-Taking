@@ -1,7 +1,7 @@
 import { ConflictException, ForbiddenException, Injectable, InternalServerErrorException } from '@nestjs/common';
 import { DatabaseService } from 'src/database/database.service';
 import { CreateUserDto, LoginUserDto } from './dto';
-import * as bcrypt from 'bcrypt';
+import * as bcrypt from 'bcryptjs';  // Replace bcrypt with bcryptjs
 import { JwtService } from '@nestjs/jwt';
 
 
