@@ -5,6 +5,7 @@ import { AuthModule } from './auth/auth.module';
 import { NotesModule } from './notes/notes.module';
 import { UsersModule } from './users/users.module';
 import { ThrottlerModule } from '@nestjs/throttler';
+import { CustomLoggerService } from './logger/logger.service';
 
 @Module({
   imports: [
@@ -17,6 +18,16 @@ import { ThrottlerModule } from '@nestjs/throttler';
     }]),
     ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService,
+    {
+      provide:CustomLoggerService,
+      useClass:CustomLoggerService 
+    }
+  ],
 })
-export class AppModule {}
+export class AppModule {
+constructor(private readonly logger:CustomLoggerService ){
+  this.logger.log('Application Initialized')
+}
+}

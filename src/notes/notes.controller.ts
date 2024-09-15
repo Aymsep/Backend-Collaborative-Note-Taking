@@ -6,11 +6,14 @@ import { AuthGuard } from '@nestjs/passport';
 import { Request } from 'express';
 import { sharedNoteDto } from './dto';
 import { GetUser } from 'src/common/decorators/get-user.decorator';
+import { CustomLoggerService } from 'src/logger/logger.service';
 
 @Controller('notes')
 @UseGuards(AuthGuard('jwt-checker'))
 export class NotesController {
-  constructor(private readonly notesService: NotesService) {}
+  constructor(
+    private readonly notesService: NotesService,
+    ) {}
 
   @Post()
   @HttpCode(HttpStatus.CREATED)
