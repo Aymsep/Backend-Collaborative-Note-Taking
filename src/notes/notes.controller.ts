@@ -5,6 +5,7 @@ import { UpdateNoteDto } from './dto/update-note.dto';
 import { AuthGuard } from '@nestjs/passport';
 import { Request } from 'express';
 import { sharedNoteDto } from './dto';
+import { GetUser } from 'src/common/decorators/get-user.decorator';
 
 @Controller('notes')
 @UseGuards(AuthGuard('jwt-checker'))
@@ -12,61 +13,32 @@ export class NotesController {
   constructor(private readonly notesService: NotesService) {}
 
   @Post()
-  create(
-    @Body() note: CreateNoteDto,
-    @Req() req: Request
-    ) {
-      const user = req.user
-
-    return this.notesService.create(user['id'],note);
+  create(@Body() note: CreateNoteDto, @GetUser() user: any) {
+    return this.notesService.create(user.id, note);
   }
 
   @Post('share')
-  async share(
-    @Body() note:sharedNoteDto,
-    @Req() req: Request
-  ){
-    const user = req.user
-    console.log('user', user)
-    console.log('note', note)
-    return this.notesService.shareNote(user['id'],note['NoteId'],note['targetId'])
-
+  async share(@Body() note: sharedNoteDto, @GetUser() user: any) {
+    return this.notesService.shareNote(user.id, note.NoteId, note.targetId);
   }
 
   @Get()
-  findAll(
-    @Req() req: Request,
-  ) {
-    const user = req.user
-    console.log('user',user)
-    return this.notesService.findAll(user['id']);
+  findAll(@GetUser() user: any) {
+    return this.notesService.findAll(user.id);
   }
 
   @Get(':id')
-  findOne(
-    @Param('id') id: string,
-    @Req() req: Request
-    ) {
-      const user = req.user
-    return this.notesService.findOne(user['id'],+id);
+  findOne(@Param('id') id: string, @GetUser() user: any) {
+    return this.notesService.findOne(user.id, +id);
   }
 
   @Patch(':id')
-  update(
-    @Req() req: Request,
-     @Param('id') id: string,
-     @Body() content: UpdateNoteDto
-     ) {
-      const user =  req.user
-    return this.notesService.update(user['id'],+id,content);
+  update(@Param('id') id: string, @Body() content: UpdateNoteDto, @GetUser() user: any) {
+    return this.notesService.update(user.id, +id, content);
   }
 
   @Delete(':id')
-  remove(
-    @Param('id') id: string,
-    @Req() req: Request
-    ) {
-      const user = req.user
-    return this.notesService.remove(user['id'],+id);
+  remove(@Param('id') id: string, @GetUser() user: any) {
+    return this.notesService.remove(user.id, +id);
   }
 }
