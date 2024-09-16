@@ -27,7 +27,7 @@ services:
       - db
     volumes:
       - ./src:/app/src
-    command: sh -c "npm install && npx prisma generate && npm run start:dev"
+    command: sh -c "npm install && npx prisma generate && npm run dev:docker"
 
   pgadmin:
     image: dpage/pgadmin4
