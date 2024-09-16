@@ -1,0 +1,326 @@
+{
+	"info": {
+		"_postman_id": "e327edd3-0a81-4c60-b386-9b91fa2fc620",
+		"name": "Backend Notes",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Login",
+					"id": "5d6b9aad-765e-46d7-8f92-b80202380f12",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"aymaddgnd@email.com\",\r\n    \"password\":\"aymaddgnd@email.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{BaseUrl}}/auth/local/signin"
+					},
+					"response": []
+				},
+				{
+					"name": "GetProfile",
+					"id": "a0cbc3a3-86ce-4654-97e9-3fc4b5b6410c",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"aymsep@email.com\",\r\n    \"password\":\"1234567\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{BaseUrl}}/auth/local/profile"
+					},
+					"response": []
+				},
+				{
+					"name": "Signup",
+					"id": "4b56368e-bdd3-41e2-a77d-2de3db915357",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\":\"ayddgdman\",\r\n    \"email\":\"aymaddgnd@email.com\",\r\n    \"password\":\"aymaddgnd@email.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{BaseUrl}}/auth/local/signup"
+					},
+					"response": []
+				},
+				{
+					"name": "validate-token",
+					"id": "66639100-e471-4fe5-88d4-b509c5c4ebb5",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": "{{BaseUrl}}/Logout"
+					},
+					"response": []
+				}
+			],
+			"id": "3ce19114-18a0-47ff-95be-0e289166992c"
+		},
+		{
+			"name": "Notes",
+			"item": [
+				{
+					"name": "createNote",
+					"id": "c5d07d4a-f790-4caa-9f08-91adf6f237f4",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"content\":\"this ais theadada 1545fdasfasd note from widad\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{BaseUrl}}/notes/"
+					},
+					"response": []
+				},
+				{
+					"name": "updateNotes",
+					"id": "d164a031-0178-4172-9c41-371616e8af61",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"content\":\"tjhis is fdsam widad 2025\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{BaseUrl}}/notes/86"
+					},
+					"response": []
+				},
+				{
+					"name": "getAllNotes",
+					"id": "ca48300f-c1c6-4b3e-a613-13be3bf9338d",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token2}}"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "{{BaseUrl}}/notes/"
+					},
+					"response": []
+				},
+				{
+					"name": "removeNote",
+					"id": "862c414e-9e62-479c-8e2d-54030220be40",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token2}}"
+							}
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": "{{BaseUrl}}/notes/3"
+					},
+					"response": []
+				},
+				{
+					"name": "getSingleNote",
+					"id": "e4bf926c-da1f-4f36-aa44-d7f98f4828b6",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "{{BaseUrl}}/notes/86"
+					},
+					"response": []
+				},
+				{
+					"name": "shareNote",
+					"id": "8035fbc9-91d7-445a-a4af-b4e3c9c7012e",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token2}}"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"NoteId\":4,\r\n    \"targetId\":9\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{BaseUrl}}/notes/share"
+					},
+					"response": []
+				}
+			],
+			"id": "f431b3ce-4a8c-4b2a-bf4b-e20128920603"
+		},
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "getAllUsers",
+					"id": "59abd1dc-86f1-40ad-829c-59830854978a",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token2}}"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "{{BaseUrl}}/users"
+					},
+					"response": []
+				}
+			],
+			"id": "4de41aa9-ead1-44df-848a-4f9936f74510"
+		},
+		{
+			"name": "CheckHealth",
+			"id": "2c324bda-e689-4e92-ac69-193b5ae1deca",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "{{BaseUrl}}"
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "7dad842f-bc4f-466a-938d-84499df87459",
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "656fc218-e6c5-449b-8268-2286bec3be51",
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "BaseUrl",
+			"value": "http://localhost:3000/api/v1",
+			"type": "string"
+		},
+		{
+			"key": "token",
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTAsImVtYWlsIjoiYXltYW5AZW1haWwuY29tIiwidXNlcm5hbWUiOiJheW1hbiIsImlhdCI6MTcyNjQzNDczNH0.utskoj5cYh_RTt0ESbcrd7zizxDVbb5Qs0lloNtROhM",
+			"type": "string"
+		},
+		{
+			"key": "token2",
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTAsImVtYWlsIjoiYXltYW5AZW1haWwuY29tIiwidXNlcm5hbWUiOiJheW1hbiIsImlhdCI6MTcyNjE5ODg0MH0.F9qp3Ai4pojd4ClUJSUdww4y_wD89Ez8u--0M91l2hY",
+			"type": "string"
+		}
+	]
+}
