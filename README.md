@@ -1,85 +1,154 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# Collaborative Note-Taking Application
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+This is the backend of the Collaborative Note-Taking Application, built with NestJS and PostgreSQL, and using Prisma as the ORM. The backend manages user authentication, note creation, note sharing, and real-time collaboration features using WebSockets.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## Project Structure
 
-## Description
+├── dist/                           # Compiled output
+├── logs/                           # Log files (e.g., request and application logs)
+│   ├── application-2024-09-15.log
+│   └── application-2024-09-16.log
+├── node_modules/                   # Node.js modules
+├── prisma/
+│   ├── migrations/                 # Prisma migrations for database schema
+│   └── schema.prisma               # Prisma schema definition
+├── src/
+│   ├── auth/                       # Authentication module
+│   ├── common/                     # Common files and decorators
+│   ├── database/                   # Database module and Prisma integration
+│   ├── interceptors/               # HTTP request logging interceptors
+│   ├── logger/                     # Logging service using Winston
+│   ├── messages/                   # Custom response and error messages
+│   ├── notes/                      # Notes module (CRUD operations for notes)
+│   ├── users/                      # Users module
+│   ├── utils/                      # Utility functions (e.g., token generation, hashing)
+│   ├── app.controller.ts           # Main application controller
+│   ├── app.module.ts               # Application root module
+│   ├── app.service.ts              # Application service
+│   └── main.ts                     # Application entry point
+├── test/                           # Test files
+├── .env                            # Environment variables
+├── .env.development                # Development environment variables
+├── docker-compose.yml              # Docker Compose configuration
+├── Dockerfile                      # Dockerfile for backend service
+├── nest-cli.json                   # NestJS CLI configuration
+├── tsconfig.json                   # TypeScript configuration
+├── package.json                    # Project dependencies and scripts
+└── README.md                       # Project documentation
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
 
-## Project setup
+## Features
 
-```bash
-$ npm install
+### User Authentication:
+
+- JWT-based authentication using Passport.js.
+- Routes for sign-up, sign-in, and user profile retrieval.
+
+### Note Management:
+
+- Create, edit, delete, and share notes.
+- Only the owner can delete a note, even if it has been shared.
+- Users can see notes shared with them, but they cannot delete them.
+
+### Real-time Collaboration:
+
+- WebSocket-based real-time editing of shared notes.
+- Any changes to shared notes are broadcasted in real-time to other collaborators.
+
+### Request Logging:
+
+- HTTP request logs captured using Winston and stored in the `logs/` folder.
+
+## Getting Started
+
+### Prerequisites
+
+- **Node.js** (version 18.x or higher)
+- **PostgreSQL** (version 13 or higher)
+- **Docker** (for containerization)
+
+### Environment Setup
+
+The application requires a `.env` or `.env.development` file containing the following variables:
+
+```plaintext
+DATABASE_URL=postgresql://<user>:<password>@<host>:<port>/<database>
+JWT_SECRET=your_jwt_secret_key
+PORT=3000
 ```
 
-## Compile and run the project
+Running the Application
+The application is containerized using Docker. You can run the backend using the docker-compose.yml provided in the project root.
 
+Steps:
+
+1. Build and start the containers:
 ```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+docker-compose up --build
+Running Prisma Migrations:
 ```
 
-## Run tests
-
+2. Once the application is up, run the following command to apply the database migrations:
 ```bash
-# unit tests
-$ npm run test
+docker-compose exec app npx prisma migrate deploy
+```
+3. Access the Application:
+The backend API will be available at ```http://localhost:3000/api/v1```.
+The real-time WebSocket server will be available at ```http://localhost:3000```.
 
-# e2e tests
-$ npm run test:e2e
+4.Access PostgreSQL Admin Interface:
+The application includes pgAdmin for database management.
+Access pgAdmin at ```http://localhost:5050``` (default credentials: ```admin@admin.com``` / ```pgadmin4```).
 
-# test coverage
-$ npm run test:cov
+## Testing the API
+You can use Postman or curl to interact with the API endpoints. The API follows RESTful principles and has routes for:
+
+POST /auth/local/signup — User registration
+POST /auth/local/signin — User login
+GET /auth/local/profile — Fetch user profile
+POST /notes — Create a note
+GET /notes — Get all notes (including shared ones)
+PATCH /notes/:id — Update a note
+DELETE /notes/:id — Delete a note
+
+## Logging
+All incoming HTTP requests and application-level logs are captured using **Winston** and stored in the ```logs/``` folder. Logs are rotated daily to keep the files manageable.
+
+Example log path: ```logs/application-YYYY-MM-DD.log```
+
+## Swagger Documentation
+API documentation is generated using Swagger and is accessible at ```http://localhost:3000/api/v1/docs``` (in development mode).
+
+# Development
+For development, use the following commands:
+
+**Start the application:
+**
+```bash
+npm run dev
+Lint the project:
 ```
 
-## Resources
+```bash
+npm run lint
+Run tests:
+```
 
-Check out a few resources that may come in handy when working with NestJS:
+```bash
+npm run test
+```
+## Deployment
+For production, the application is Dockerized and can be easily deployed using container orchestration tools like Kubernetes or AWS ECS. Make sure to update your .env for production use and ensure the correct database credentials and JWT secrets are in place.
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+# Technologies Used
+**NestJS** — A progressive Node.js framework for building efficient, reliable, and scalable server-side applications.
+**PostgreSQL** — An open-source relational database system.
+**Prisma** — ORM for seamless database migrations and queries.
+**WebSocket** — For real-time communication in shared note editing.
+**Docker** — Containerization of the application.
+**Winston** — Logging library to capture and store logs.
+**License**
+This project is licensed under the **MIT License**.
 
-## Support
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
 
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
