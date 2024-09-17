@@ -110,6 +110,7 @@ export class NotesService {
         sharedNote,
       };
     } catch (error) {
+      console.log('errror',error)
       throw new InternalServerErrorException(ERROR_MESSAGES.SHARE_NOTE_FAILED);
     }
   }
@@ -125,7 +126,16 @@ export class NotesService {
       }
 
       if (note.userId !== userId) {
-        throw new ForbiddenException(ERROR_MESSAGES.ACCESS_DENIED);
+        const sharedNote = await this.databaseService.noteShare.findFirst({
+          where: {
+            noteId,
+            userId,
+          },
+        });
+  
+        if (!sharedNote) {
+          throw new ForbiddenException(ERROR_MESSAGES.ACCESS_DENIED);
+        }
       }
 
       const updatedNote = await this.databaseService.note.update({
@@ -138,6 +148,7 @@ export class NotesService {
         note: updatedNote,
       };
     } catch (error) {
+      console.log('erro',error)
       throw new InternalServerErrorException(ERROR_MESSAGES.UPDATE_NOTE_FAILED);
     }
   }
@@ -147,10 +158,14 @@ export class NotesService {
       const note = await this.databaseService.note.findUnique({
         where: { id: noteId },
       });
+      if (note.userId !== userId ) {
+        throw new NotFoundException(ERROR_MESSAGES.DELETE_NOTE_FAILED_OWNER);
+      }
 
-      if (!note || note.userId !== userId) {
+      if (!note ) {
         throw new NotFoundException(ERROR_MESSAGES.NOTE_NOT_FOUND);
       }
+
 
       await this.databaseService.$transaction(async (prisma) => {
         await prisma.noteShare.deleteMany({

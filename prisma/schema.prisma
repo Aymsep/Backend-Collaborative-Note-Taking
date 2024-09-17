@@ -24,7 +24,7 @@ model Note {
   userId     Int          
   createdAt  DateTime    @default(now())
   updatedAt  DateTime    @updatedAt
-  user       User        @relation(fields: [userId], references: [id])
+  user       User        @relation(fields: [userId], references: [id], onDelete: Cascade)
   sharedWith NoteShare[]
 }
 
@@ -34,7 +34,7 @@ model NoteShare {
   noteId    Int     
   createdAt DateTime @default(now())
   note      Note     @relation(fields: [noteId], references: [id], onDelete: Cascade)  
-  user      User     @relation(fields: [userId], references: [id])
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   @@index([userId, noteId])
 }
 
