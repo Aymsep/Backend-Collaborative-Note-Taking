@@ -19,7 +19,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"email\":\"aymaddgnd@email.com\",\r\n    \"password\":\"aymaddgnd@email.com\"\r\n}",
+							"raw": "{\r\n    \"email\":\"ayman@email.com\",\r\n    \"password\":\"ayman@email.com\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -256,7 +256,7 @@
 						"auth": {
 							"type": "bearer",
 							"bearer": {
-								"token": "{{token2}}"
+								"token": "{{token}}"
 							}
 						},
 						"method": "GET",
