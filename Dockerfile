@@ -4,11 +4,11 @@ WORKDIR /app
 
 COPY package*.json ./
 
-# Ensure dependencies are installed in the container environment
 RUN npm install
 
 COPY . .
 
 RUN npm run build
 
-CMD [ "npm", "run", "dev:docker" ]
+# Apply Prisma migrations
+CMD [ "sh", "-c", "npx prisma migrate dev && npm run dev:docker" ]
