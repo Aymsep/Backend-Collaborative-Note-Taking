@@ -69,7 +69,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"username\":\"aydddgdman\",\r\n    \"email\":\"aymadddgnd@email.com\"\r\n    // \"password\":\"aymaddgnd@email.com\"\r\n}",
+							"raw": "{\r\n    \"username\":\"aydddgdman\",\r\n    \"email\":\"aymadddgnd@email.com\",\r\n    \"password\":\"\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -286,7 +286,7 @@
 		{
 			"listen": "prerequest",
 			"script": {
-				"id": "31649424-e25c-40fa-9864-16e8d4db8434",
+				"id": "b548fb87-89ee-40f4-a923-dc486d186f0f",
 				"type": "text/javascript",
 				"packages": {},
 				"exec": [
@@ -297,7 +297,7 @@
 		{
 			"listen": "test",
 			"script": {
-				"id": "682dd5d3-212c-4739-9f3c-e94903b928f0",
+				"id": "ce571e84-2360-4543-b923-169fae5bbf67",
 				"type": "text/javascript",
 				"packages": {},
 				"exec": [
@@ -314,7 +314,7 @@
 		},
 		{
 			"key": "token",
-			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJheW1hZGRnbmRAZW1haWwuY29tIiwidXNlcm5hbWUiOiJheWRkZ2RtYW4iLCJpYXQiOjE3MjY3NDc2NjksImV4cCI6MTcyNjc3Mjg2OX0.4WItJmQUIOJxav5cI9XwcQCH1YCXMhaM6TBB_NfmHbA",
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTMsImVtYWlsIjoiZmRhZmRhQGZkYS5jb20iLCJ1c2VybmFtZSI6ImhqaCIsImlhdCI6MTcyNjg4NTcwNiwiZXhwIjoxNzI2OTEwOTA2fQ.2EBnycIAvAdTYZIjHUXYvEhYIaXMRqTEI7PUWdupvB0",
 			"type": "string"
 		},
 		{
