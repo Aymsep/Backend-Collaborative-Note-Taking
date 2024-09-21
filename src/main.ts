@@ -4,7 +4,7 @@ import * as dotenv from 'dotenv';
 import { ThrottlerGuard } from '@nestjs/throttler';
 import * as compression from 'compression';
 import helmet from 'helmet';
-import { Logger } from '@nestjs/common';
+import { Logger, ValidationPipe } from '@nestjs/common';
 import { CustomLoggerService } from './logger/logger.service';
 import { HttpLoggingInterceptor } from './interceptors/http-logging.interceptor';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
@@ -15,6 +15,7 @@ dotenv.config();
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const logger = new CustomLoggerService()
+  app.useGlobalPipes(new ValidationPipe());
   app.setGlobalPrefix('api/v1')
   app.enableCors();  // Enable CORS globally
   app.useGlobalInterceptors(new HttpLoggingInterceptor(logger));
