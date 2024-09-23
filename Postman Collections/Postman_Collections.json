@@ -277,7 +277,7 @@
 			"request": {
 				"method": "GET",
 				"header": [],
-				"url": "{{BaseUrl}}"
+				"url": "https://main--celadon-creponne-5a20ab.netlify.app/"
 			},
 			"response": []
 		}
